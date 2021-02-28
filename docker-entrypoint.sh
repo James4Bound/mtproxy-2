@@ -106,10 +106,11 @@ done
 
 [ ! -z "$TAG" ] && echo "[*]   Tag: $TAG" || echo "[*]   Tag: no tag"
 echo "[*]   External IP: ${EXTERNAL_IP}"
+echo "[*]   Bind Port in Heroku: ${PORT}"
 echo "[*]   Make sure to fix the links in case you run the proxy on a different port."
 echo
 echo '[+] Starting proxy...'
 sleep 1
 
 # exec /mtproxy/mtproto-proxy -p 2398 -H 443 -M "$WORKERS" -C 60000 --aes-pwd /etc/telegram/hello-explorers-how-are-you-doing -u root $CONFIG --allow-skip-dh --nat-info "$INTERNAL_IP:$IP" $SECRET_CMD $TAG_CMD
-exec /mtproxy/mtproto-proxy "$@" --aes-pwd ${REMOTE_SECRET} --user root ${REMOTE_CONFIG} --nat-info "$INTERNAL_IP:$EXTERNAL_IP" ${SECRET_CMD} ${TAG_CMD}
+exec /mtproxy/mtproto-proxy "$@" --http-ports ${PORT} --aes-pwd ${REMOTE_SECRET} --user root ${REMOTE_CONFIG} --nat-info "$INTERNAL_IP:$EXTERNAL_IP" ${SECRET_CMD} ${TAG_CMD}
